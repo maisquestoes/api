@@ -64,6 +64,7 @@ module.exports = function(db) {
 
 	if (process.env.NODE_ENV === 'production') {
 		i18n.init({
+			useCookie: false,
 			resGetPath: 'locales/__lng__.json', 
 			preload: ['en-US', 'pt-BR'],
 		});
@@ -72,6 +73,7 @@ module.exports = function(db) {
 			resGetPath: 'locales/__lng__.json', 
 			preload: ['en-US', 'pt-BR'],
 			saveMissing: true,
+			useCookie: false,
 			sendMissingTo: 'fallback',
 			debug: true,
 		});
