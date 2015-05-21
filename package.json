@@ -1,0 +1,63 @@
+{
+  "name": "maisquestoes",
+  "description": "+Questões REST API",
+  "version": "0.0.1",
+  "author": "Henri Cavalcante",
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.4.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/maisquestoes/api-mean.git"
+  },
+  "scripts": {
+    "start": "grunt",
+    "test": "grunt test"
+  },
+  "dependencies": {
+    "async": "~0.9.0",
+    "body-parser": "~1.9.0",
+    "chalk": "~0.5",
+    "compression": "~1.2.0",
+    "consolidate": "~0.10.0",
+    "express": "~4.10.1",
+    "forever": "~0.11.0",
+    "glob": "~4.0.5",
+    "grunt-cli": "~0.1.13",
+    "helmet": "~0.5.0",
+    "i18next": "^1.9.0",
+    "lodash": "~2.4.1",
+    "lodashim": "^1.0.1",
+    "method-override": "~2.3.0",
+    "mongoose": "~3.8.25",
+    "mongoose-validators": "0.1.0",
+    "morgan": "~1.4.1",
+    "nodemailer": "~1.3.0",
+    "passport": "~0.2.0",
+    "passport-facebook": "~1.0.2",
+    "passport-github": "~0.1.5",
+    "passport-google-oauth": "~0.1.5",
+    "passport-linkedin": "~0.1.3",
+    "passport-local": "~1.0.0",
+    "passport-localapikey": "0.0.3",
+    "passport-twitter": "~1.0.2",
+    "swig": "~1.4.1"
+  },
+  "devDependencies": {
+    "frisby": "^0.8.5",
+    "grunt-concurrent": "~1.0.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-env": "~0.4.1",
+    "grunt-karma": "~0.9.0",
+    "grunt-mocha-test": "~0.12.1",
+    "grunt-ng-annotate": "~0.4.0",
+    "grunt-node-inspector": "~0.1.3",
+    "grunt-nodemon": "~0.3.0",
+    "jasmine": "^2.3.1",
+    "load-grunt-tasks": "~1.0.0",
+    "should": "~4.1.0",
+    "supertest": "~0.14.0"
+  }
+}
