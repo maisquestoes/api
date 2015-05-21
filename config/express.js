@@ -17,6 +17,7 @@ var config = require('./config');
 var consolidate = require('consolidate');
 var path = require('path');
 var i18n = require('i18next');
+var _ = require('lodash');
 var JsonReturn = require('../app/models/jsonreturn.server.model');
 
 module.exports = function(db) {
@@ -62,22 +63,22 @@ module.exports = function(db) {
 	}));
 	app.use(bodyParser.json());
 
-	if (process.env.NODE_ENV === 'production') {
-		i18n.init({
-			useCookie: false,
-			resGetPath: 'locales/__lng__.json', 
-			preload: ['en-US', 'pt-BR'],
-		});
-	} else {
-		i18n.init({
-			resGetPath: 'locales/__lng__.json', 
-			preload: ['en-US', 'pt-BR'],
+	var configI18n = {
+		resGetPath: 'locales/__lng__.json', 
+		preload: ['en', 'pt'],
+		useCookie: false,
+		fallbackLng: 'en',
+	};
+
+	if (process.env.NODE_ENV !== 'production') {
+		configI18n = _.extend(configI18n,{
 			saveMissing: true,
-			useCookie: false,
 			sendMissingTo: 'fallback',
 			debug: true,
 		});
 	}
+
+	i18n.init(configI18n);
 
 	app.use(i18n.handle);
 
