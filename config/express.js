@@ -62,13 +62,20 @@ module.exports = function(db) {
 	}));
 	app.use(bodyParser.json());
 
-	i18n.init({
-		resGetPath: 'locales/__lng__.json', 
-		preload: ['en-US', 'pt-BR'],
-		saveMissing: true,
-		sendMissingTo: 'fallback',
-		debug: true,
-	});
+	if (process.env.NODE_ENV === 'production') {
+		i18n.init({
+			resGetPath: 'locales/__lng__.json', 
+			preload: ['en-US', 'pt-BR'],
+		});
+	} else {
+		i18n.init({
+			resGetPath: 'locales/__lng__.json', 
+			preload: ['en-US', 'pt-BR'],
+			saveMissing: true,
+			sendMissingTo: 'fallback',
+			debug: true,
+		});
+	}
 
 	app.use(i18n.handle);
 
