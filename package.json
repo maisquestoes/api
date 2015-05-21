@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "async": "~1.0.0",
-    "body-parser": "~1.9.0",
+    "body-parser": "~1.12.4",
     "chalk": "~1.0.0",
     "compression": "~1.4.4",
     "consolidate": "~0.12.1",
