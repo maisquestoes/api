@@ -11,4 +11,4 @@ notifications:
   slack:
     rooms:
       - maisquestoes:7nTehrgvkxjh1onILRBmB4LV#general
-      - maisquestoes:7nTehrgvkxjh1onILRBmB4LV#random
+      - maisquestoes:7nTehrgvkxjh1onILRBmB4LV#build
