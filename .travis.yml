@@ -7,3 +7,8 @@ env:
   - NODE_ENV=test
 services:
   - mongodb
+notifications:
+  slack:
+    rooms:
+      - maisquestoes:7nTehrgvkxjh1onILRBmB4LV#general
+      - maisquestoes:7nTehrgvkxjh1onILRBmB4LV#random
