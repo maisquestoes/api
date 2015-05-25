@@ -90,8 +90,8 @@ exports.list = function(req, res) {
  */
 exports.questionByID = function(req, res, next, id) { 
 	Question.findById(id).populate('user', 'displayName').exec(function(err, question) {
-		if (err) return next(err);
-		if (! question) return next(new Error('Failed to load Question ' + id));
+		if (err) { return next(err); }
+		if (! question) { return next(new Error('Failed to load Question ' + id)); }
 		req.question = question ;
 		next();
 	});

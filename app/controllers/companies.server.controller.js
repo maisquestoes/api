@@ -90,8 +90,8 @@ exports.list = function(req, res) {
  */
 exports.companyByID = function(req, res, next, id) { 
 	Company.findById(id).populate('user', 'displayName').exec(function(err, company) {
-		if (err) return next(err);
-		if (! company) return next(new Error('Failed to load Company ' + id));
+		if (err) { return next(err); }
+		if (! company) { return next(new Error('Failed to load Company ' + id)); }
 		req.company = company ;
 		next();
 	});

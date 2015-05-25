@@ -10,15 +10,18 @@ var _ = require('lodashim');
  */
 var	JsonReturn = function(settings, status, object) {
 
-	if (!(this instanceof JsonReturn))
+	if (!(this instanceof JsonReturn)) {
 		return new JsonReturn(settings);
+	}
 
-	if (typeof settings === 'string')
+	if (typeof settings === 'string') {
 		settings = { m: settings };
+	}
 
-	if (typeof settings === 'number')
+	if (typeof settings === 'number') {
 		settings = { s: settings };
-	
+	}
+
 	var jsonReturn = {
 		o: object || {},
 		m: '',
@@ -27,10 +30,11 @@ var	JsonReturn = function(settings, status, object) {
 
 	_.extend(jsonReturn, settings);
 
-	if (!jsonReturn.m && jsonReturn.s < 0)
+	if (!jsonReturn.m && jsonReturn.s < 0) {
 		jsonReturn.m = 'Ocorreu um erro: ' + jsonReturn.s;
-	else if (!jsonReturn.m && jsonReturn.s > 0)
+	} else if (!jsonReturn.m && jsonReturn.s > 0) {
 		jsonReturn.m = 'Ação realizada com sucesso.';
+	}
 
 	return jsonReturn;
 

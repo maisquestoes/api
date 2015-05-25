@@ -4,7 +4,6 @@
  * Module dependencies.
  */
 var fs = require('fs');
-var http = require('http');
 var https = require('https');
 var express = require('express');
 var morgan = require('morgan');
@@ -14,13 +13,12 @@ var methodOverride = require('method-override');
 var helmet = require('helmet');
 var passport = require('passport');
 var config = require('./config');
-var consolidate = require('consolidate');
 var path = require('path');
 var i18n = require('i18next');
 var _ = require('lodash');
 var JsonReturn = require('../app/models/jsonreturn.server.model');
 
-module.exports = function(db) {
+module.exports = function() {
 	// Initialize express app
 	var app = express();
 
@@ -103,7 +101,7 @@ module.exports = function(db) {
 	// Assume 'not found' in the error msgs is a 404. this is somewhat silly, but valid, you can do whatever you like, set properties, use instanceof etc.
 	app.use(function(err, req, res, next) {
 		// If the error object doesn't exists
-		if (!err) return next();
+		if (!err) { return next(); }
 
 		// Log it
 		console.error(err.stack);

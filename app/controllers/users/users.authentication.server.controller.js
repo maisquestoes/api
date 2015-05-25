@@ -154,7 +154,7 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 		// Check if user exists, is not signed in using this provider, and doesn't have that provider data already configured
 		if (user.provider !== providerUserProfile.provider && (!user.additionalProvidersData || !user.additionalProvidersData[providerUserProfile.provider])) {
 			// Add the provider data to the additional provider data field
-			if (!user.additionalProvidersData) user.additionalProvidersData = {};
+			if (!user.additionalProvidersData) { user.additionalProvidersData = {}; }
 			user.additionalProvidersData[providerUserProfile.provider] = providerUserProfile.providerData;
 
 			// Then tell mongoose that we've updated the additionalProvidersData field
@@ -173,7 +173,7 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 /**
  * Remove OAuth provider
  */
-exports.removeOAuthProvider = function(req, res, next) {
+exports.removeOAuthProvider = function(req, res) {
 	var user = req.user;
 	var provider = req.param('provider');
 

@@ -90,8 +90,8 @@ exports.list = function(req, res) {
  */
 exports.likeByID = function(req, res, next, id) { 
 	Like.findById(id).populate('user', 'displayName').exec(function(err, like) {
-		if (err) return next(err);
-		if (! like) return next(new Error('Failed to load Like ' + id));
+		if (err) { return next(err); }
+		if (! like) { return next(new Error('Failed to load Like ' + id)); }
 		req.like = like ;
 		next();
 	});

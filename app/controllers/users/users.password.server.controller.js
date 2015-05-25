@@ -3,10 +3,8 @@
 /**
  * Module dependencies.
  */
-var _ = require('lodash');
 var errorHandler = require('../errors.server.controller');
 var mongoose = require('mongoose');
-var passport = require('passport');
 var UserSchema = require('../../models/user.server.model');
 var User = mongoose.model('User', UserSchema);
 var config = require('../../../config/config');
@@ -84,7 +82,7 @@ exports.forgot = function(req, res, next) {
 			});
 		}
 	], function(err) {
-		if (err) return next(err);
+		if (err) { return next(err); }
 	});
 };
 
@@ -181,7 +179,7 @@ exports.reset = function(req, res, next) {
 			});
 		}
 	], function(err) {
-		if (err) return next(err);
+		if (err) { return next(err); }
 	});
 };
 

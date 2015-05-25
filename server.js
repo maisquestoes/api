@@ -2,10 +2,11 @@
 /**
  * Module dependencies.
  */
-var init = require('./config/init')(),
-	config = require('./config/config'),
-	mongoose = require('mongoose'),
-	chalk = require('chalk');
+require('./config/init')();
+
+var config = require('./config/config');
+var mongoose = require('mongoose');
+var chalk = require('chalk');
 
 /**
  * Main application entry file.

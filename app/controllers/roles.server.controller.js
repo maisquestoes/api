@@ -90,8 +90,8 @@ exports.list = function(req, res) {
  */
 exports.roleByID = function(req, res, next, id) { 
 	Role.findById(id).populate('user', 'displayName').exec(function(err, role) {
-		if (err) return next(err);
-		if (! role) return next(new Error('Failed to load Role ' + id));
+		if (err) { return next(err); }
+		if (! role) { return next(new Error('Failed to load Role ' + id)); }
 		req.role = role ;
 		next();
 	});

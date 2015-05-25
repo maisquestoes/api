@@ -5,10 +5,6 @@
  */
 var _ = require('lodash');
 var errorHandler = require('../errors.server.controller');
-var mongoose = require('mongoose');
-var passport = require('passport');
-var UserSchema = require('../../models/user.server.model');
-var User = mongoose.model('User', UserSchema);
 
 /**
  * Update user details
@@ -16,7 +12,6 @@ var User = mongoose.model('User', UserSchema);
 exports.update = function(req, res) {
 	// Init Variables
 	var user = req.user;
-	var message = null;
 
 	// For security measurement we remove the roles from the req.body object
 	delete req.body.roles;

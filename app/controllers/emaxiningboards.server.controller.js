@@ -90,8 +90,8 @@ exports.list = function(req, res) {
  */
 exports.emaxiningboardByID = function(req, res, next, id) { 
 	Emaxiningboard.findById(id).populate('user', 'displayName').exec(function(err, emaxiningboard) {
-		if (err) return next(err);
-		if (! emaxiningboard) return next(new Error('Failed to load Emaxiningboard ' + id));
+		if (err) { return next(err); }
+		if (! emaxiningboard) { return next(new Error('Failed to load Emaxiningboard ' + id)); }
 		req.emaxiningboard = emaxiningboard ;
 		next();
 	});

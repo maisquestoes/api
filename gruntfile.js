@@ -3,8 +3,8 @@
 module.exports = function(grunt) {
 	var watchFiles = {
 		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js'],
-		mochaTests: ['app/tests/mocha/*.js'],
-		frisbyTests: ['app/tests/mocha/*.js'],
+		mochaTests: ['tests/mocha/*.js'],
+		frisbyTests: ['tests/frisby/*.js'],
 	};
 
 	grunt.initConfig({
@@ -77,13 +77,10 @@ module.exports = function(grunt) {
 	// Load NPM tasks
 	require('load-grunt-tasks')(grunt);
 
-	// Making grunt default to force in order not to break the project.
-	grunt.option('force', true);
-
 	// A Task for loading the configuration object
 	grunt.task.registerTask('loadConfig', 'Task that loads the config into a grunt option.', function() {
-		var init = require('./config/init')();
-		var config = require('./config/config');
+		require('./config/init')();
+		require('./config/config');
 	});
 
 	grunt.registerTask('default', ['concurrent:default']);
@@ -92,9 +89,6 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('secure', ['env:secure', 'lint', 'concurrent:default']);
 
-	grunt.registerTask('lint', ['jshint']);
+	grunt.registerTask('test', ['jshint', 'env:test', 'mochaTest']);
 
-	grunt.registerTask('build', ['lint', 'loadConfig']);
-
-	grunt.registerTask('test', ['env:test', 'mochaTest']);
 };

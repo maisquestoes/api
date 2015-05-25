@@ -8,7 +8,6 @@ var errorHandler = require('./errors.server.controller');
 var SubjectSchema = require('../models/subject.server.model.js');
 var	Subject = mongoose.model('Subject', SubjectSchema);
 var _ = require('lodashim');
-var JsonReturn = require('../models/jsonreturn.server.model');
 
 /**
  * Create a Subject
@@ -103,8 +102,8 @@ exports.listAll = function(req,res) {
  */
 exports.subjectByID = function(req, res, next, id) { 
 	Subject.findById(id).populate('user', 'displayName').exec(function(err, subject) {
-		if (err) return next(err);
-		if (! subject) return next(new Error('Failed to load Subject ' + id));
+		if (err) { return next(err); }
+		if (! subject) { return next(new Error('Failed to load Subject ' + id)); }
 		req.subject = subject ;
 		next();
 	});

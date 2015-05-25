@@ -72,9 +72,12 @@ describe('User Model Unit Tests:', function() {
 
 		it('should generate apikey on save', function(done) {
 			user.save(function (err) {
-				if (user.apikey.length === 22) {
-					done();
-				}
+				user.apikey.map(function (apikey) {
+					if (apikey.length === 22) {
+						done();
+					}
+					return apikey;
+				});
 			});
 			
 		});

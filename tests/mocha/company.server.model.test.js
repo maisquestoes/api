@@ -6,7 +6,7 @@
 var should = require('should');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var CompanySchema = require('../../models/company.server.model');
+var CompanySchema = require('../../app/models/company.server.model');
 var Company = mongoose.model('Company', CompanySchema);
 
 /**
