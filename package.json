@@ -41,6 +41,7 @@
     "passport-local": "~1.0.0",
     "passport-localapikey": "0.0.3",
     "passport-twitter": "~1.0.2",
+    "ratelimit-middleware": "^1.0.0",
     "swig": "~1.4.1"
   },
   "devDependencies": {

@@ -6,6 +6,7 @@
 var fs = require('fs');
 var https = require('https');
 var express = require('express');
+var ratelimit = require('ratelimit-middleware');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var compress = require('compression');
@@ -28,6 +29,12 @@ module.exports = function() {
 	app.locals.keywords = config.app.keywords;
 	app.locals.facebookAppId = config.facebook.clientID;
 
+	app.use(ratelimit({
+		burst: 10,
+		rate: 0.5,
+		ip: true
+	}));
+
 	// Passing the request url to environment locals
 	app.use(function(req, res, next) {
 		res.locals.url = req.protocol + '://' + req.headers.host + req.url;
@@ -45,7 +52,6 @@ module.exports = function() {
 	// Showing stack errors
 	app.set('showStackError', true);
 
-
 	// Environment dependent middleware
 	if (process.env.NODE_ENV === 'development') {
 		// Enable logger (morgan)
@@ -62,7 +68,9 @@ module.exports = function() {
 	app.use(bodyParser.json());
 
 	var configI18n = {
-		resGetPath: 'locales/__lng__.json', 
+		resGetPath: 'locales/__lng__.json',
+		resPostPath: 'locales/__lng__.json', 
+		resSetPath: 'locales/__lng__.json', 
 		preload: ['en', 'pt'],
 		useCookie: false,
 		fallbackLng: 'en',
@@ -112,7 +120,7 @@ module.exports = function() {
 
 	// Assume 404 since no middleware responded
 	app.use(function(req, res) {
-		res.status(404).jsonp(JsonReturn({ m: '404 - File Not Found', s: -404 }));
+		res.status(404).jsonp(JsonReturn({ m: 'File Not Found', s: -404 }));
 	});
 
 	if (process.env.NODE_ENV === 'secure') {
