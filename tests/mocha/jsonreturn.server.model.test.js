@@ -24,10 +24,7 @@ describe('JsonReturn tests:', function() {
 		});
 
 		it('should extend a return with param passed by constructor', function(done) {
-			jsonReturn = new JsonReturn({
-				m: 'test',
-				s: 1
-			});
+			jsonReturn = new JsonReturn('test',1);
 			jsonReturn.should.have.property('m', 'test');
 			jsonReturn.should.have.property('o', {});
 			jsonReturn.should.have.property('s', 1);
@@ -47,7 +44,7 @@ describe('JsonReturn tests:', function() {
 		});
 
 		it('should be instantiated without calling new', function(done) {
-			jsonReturn = new JsonReturn({m:'test', o: {obj:1}, s: 1});
+			jsonReturn = new JsonReturn('test', {obj:1}, 1);
 			jsonReturn.should.have.property('m', 'test');
 			jsonReturn.should.have.property('o', {obj:1});
 			jsonReturn.should.have.property('s', 1);

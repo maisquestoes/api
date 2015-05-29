@@ -8,7 +8,6 @@ var https = require('https');
 var express = require('express');
 var ratelimit = require('ratelimit-middleware');
 var morgan = require('morgan');
-var bodyParser = require('body-parser');
 var compress = require('compression');
 var methodOverride = require('method-override');
 var helmet = require('helmet');
@@ -61,12 +60,6 @@ module.exports = function() {
 		app.locals.cache = 'memory';
 	}
 
-	// Request body parsing middleware should be above methodOverride
-	app.use(bodyParser.urlencoded({
-		extended: true
-	}));
-	app.use(bodyParser.json());
-
 	var configI18n = {
 		resGetPath: 'locales/__lng__.json',
 		resPostPath: 'locales/__lng__.json', 
@@ -87,6 +80,25 @@ module.exports = function() {
 	i18n.init(configI18n);
 
 	app.use(i18n.handle);
+
+
+
+	app.use(function(req, res, next) {
+
+		res._jsonp = res.jsonp;
+
+		res.jsonp = function () {
+			var args = Array.prototype.slice.call(arguments);
+			var ret = args.map(function(arg) {
+				if (typeof(arg) === 'string') {
+					return req.i18n.t(arg);
+				} 
+				return arg;
+			});
+			res._jsonp(JsonReturn.apply(null, ret));
+		};
+		next();
+	});
 
 	app.use(methodOverride());
 
@@ -113,9 +125,10 @@ module.exports = function() {
 
 		// Log it
 		console.error(err.stack);
+		console.log(err);
 
 		// Error page
-		res.status(500).jsonp(JsonReturn({ m: err.stack, s: -500 }));
+		res.status(500).jsonp(JsonReturn({ m: err.message, s: -500 }));
 	});
 
 	// Assume 404 since no middleware responded
