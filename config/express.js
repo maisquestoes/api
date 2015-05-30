@@ -6,6 +6,7 @@
 var fs = require('fs');
 var https = require('https');
 var express = require('express');
+var bodyParser = require('body-parser');
 var ratelimit = require('ratelimit-middleware');
 var morgan = require('morgan');
 var compress = require('compression');
@@ -81,7 +82,11 @@ module.exports = function() {
 
 	app.use(i18n.handle);
 
+	// parse application/x-www-form-urlencoded
+	app.use(bodyParser.urlencoded({ extended: false }));
 
+	// parse application/json
+	app.use(bodyParser.json());
 
 	app.use(function(req, res, next) {
 
@@ -128,12 +133,12 @@ module.exports = function() {
 		console.log(err);
 
 		// Error page
-		res.status(500).jsonp(JsonReturn({ m: err.message, s: -500 }));
+		res.status(500).jsonp(err.message, -500);
 	});
 
 	// Assume 404 since no middleware responded
 	app.use(function(req, res) {
-		res.status(404).jsonp(JsonReturn({ m: 'File Not Found', s: -404 }));
+		res.status(404).jsonp('File Not Found', -404);
 	});
 
 	if (process.env.NODE_ENV === 'secure') {

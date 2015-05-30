@@ -9,7 +9,6 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var UserSchema = require('../../models/user.server.model');
 var User = mongoose.model('User', UserSchema);
-var JsonReturn = require('../../models/jsonreturn.server.model');
 
 /**
  * Signup
@@ -17,6 +16,7 @@ var JsonReturn = require('../../models/jsonreturn.server.model');
 exports.signup = function(req, res) {
 	// For security measurement we remove the roles from the req.body object
 	delete req.body.roles;
+	
 
 	// Init Variables
 	var user = new User(req.body);
@@ -28,7 +28,7 @@ exports.signup = function(req, res) {
 	// Then save the user 
 	user.save(function(err) {
 		if (err) {
-			return res.status(400).json(JsonReturn(errorHandler.getErrorMessage(err, -400)));
+			return res.status(400).json(errorHandler.getErrorMessage(err, -400));
 		} else {
 			// Remove sensitive data before login
 			user.password = undefined;
@@ -36,9 +36,9 @@ exports.signup = function(req, res) {
 
 			req.login(user, function(err) {
 				if (err) {
-					res.status(400).json(JsonReturn(err, -400));
+					res.status(400).json(err, -400);
 				} else {
-					res.json(JsonReturn(user));
+					res.json(user);
 				}
 			});
 		}

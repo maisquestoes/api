@@ -85,10 +85,6 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('default', ['concurrent:default']);
 
-	grunt.registerTask('debug', ['lint', 'concurrent:debug']);
-
-	grunt.registerTask('secure', ['env:secure', 'lint', 'concurrent:default']);
-
-	grunt.registerTask('test', ['jshint', 'env:test', 'mochaTest']);
+	grunt.registerTask('test', [ 'env:test', 'jshint', 'mochaTest']);
 
 };

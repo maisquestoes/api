@@ -45,47 +45,6 @@ describe('Like CRUD tests', function() {
 		});
 	});
 
-	it('should be able to save Like instance if logged in', function(done) {
-		// TODO
-		done();
-	});
-
-	it('should not be able to save Like instance if not logged in', function(done) {
-		// TODO
-		done();
-	});
-
-	it('should not be able to save Like instance if no name is provided', function(done) {
-		// TODO
-		done();
-	});
-
-	it('should be able to update Like instance if signed in', function(done) {
-		// TODO
-		done();
-	});
-
-	it('should be able to get a list of Likes if not signed in', function(done) {
-		// TODO
-		done();
-	});
-
-
-	it('should be able to get a single Like if not signed in', function(done) {
-		// TODO
-		done();
-	});
-
-	it('should be able to delete Like instance if signed in', function(done) {
-		// TODO
-		done();
-	});
-
-	it('should not be able to delete Like instance if not signed in', function(done) {
-		// TODO
-		done();
-	});
-
 	afterEach(function(done) {
 		User.remove().exec();
 		Like.remove().exec();

@@ -51,52 +51,6 @@ describe('Question CRUD tests', function() {
 		});
 	});
 
-	it('should be able to save Question instance if logged in', function(done) {
-		// TODO
-		done();
-	});
-
-	it('should not be able to save Question instance if not logged in', function(done) {
-		agent.post('/questions')
-			.send(question)
-			.expect(401)
-			.end(function(questionSaveErr, questionSaveRes) {
-				// Call the assertion callback
-				done(questionSaveErr);
-			});
-	});
-
-	it('should not be able to save Question instance if no query is provided', function(done) {
-		// TODO
-		done();
-	});
-
-	it('should be able to update Question instance if signed in', function(done) {
-		// TODO
-		done();
-	});
-
-	it('should be able to get a list of Questions if not signed in', function(done) {
-		// TODO
-		done();
-	});
-
-
-	it('should be able to get a single Question if not signed in', function(done) {
-		// TODO
-		done();
-	});
-
-	it('should be able to delete Question instance if signed in', function(done) {
-		// TODO
-		done();
-	});
-
-	it('should not be able to delete Question instance if not signed in', function(done) {
-		// TODO
-		done();
-	});
-
 	afterEach(function(done) {
 		User.remove().exec();
 		Question.remove().exec();
