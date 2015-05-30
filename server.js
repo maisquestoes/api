@@ -8,10 +8,7 @@ var config = require('./config/config');
 var mongoose = require('mongoose');
 var chalk = require('chalk');
 
-/**
- * Main application entry file.
- * Please note that the order of loading is important.
- */
+
 
 // Bootstrap db connection
 var db = mongoose.connect(config.db, function(err) {
@@ -34,4 +31,6 @@ app.listen(config.port);
 exports = module.exports = app;
 
 // Logging initialization
-console.log('+Questões started on port ' + config.port);
+console.log(chalk.green('+Questões started on port ' + config.port));
+
+

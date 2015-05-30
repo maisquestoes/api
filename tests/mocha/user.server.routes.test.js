@@ -5,27 +5,33 @@ var request = require('supertest');
 var config = require('../../config/config');
 var urlBase = 'http://localhost:' + (config.port)
 var agent = request(urlBase);
+var mongoose = require('mongoose');
 var credentials, user;
 
 describe('Subject CRUD tests', function() {
-	beforeEach(function(done) {
-		// Create user credentials
-		credentials = {
-			username: 'username2',
-			password: 'password2'
-		};
 
-		// Create a new user
-		user = {
-			firstName: 'Full2',
-			lastName: 'Name2',
-			email: 'test2@test.com',
-			username: credentials.username,
-			password: credentials.password
-		};
 
-		done();
+	before(function(done) {
+			mongoose.connection.db.dropDatabase(function () {
 
+				// Create user credentials
+				credentials = {
+					username: 'username2',
+					password: 'password2'
+				};
+
+				// Create a new user
+				user = {
+					firstName: 'Full2',
+					lastName: 'Name2',
+					email: 'test2@test.com',
+					username: credentials.username,
+					password: credentials.password
+				};
+
+				done();
+
+			});
 	});
 
 	it('should be able to create a new user by email', function(done) {
