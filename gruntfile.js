@@ -91,6 +91,8 @@ module.exports = function(grunt) {
                   lines: 20,
                   statements: 20
               },
+              root: './app',
+              reportFormats: ['cobertura','lcovonly'],
           }
       }
     },
