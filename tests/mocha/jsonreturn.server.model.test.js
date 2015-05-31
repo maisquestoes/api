@@ -3,6 +3,7 @@
 /**
  * Module dependencies.
  */
+var server = require('../../server');
 var should = require('should'),
 	JsonReturn = require('../../app/models/jsonreturn.server.model');
 /**

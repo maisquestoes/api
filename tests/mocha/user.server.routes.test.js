@@ -1,10 +1,9 @@
 'use strict';
 
+var server = require('../../server');
 var should = require('should');
 var request = require('supertest');
-var config = require('../../config/config');
-var urlBase = 'http://localhost:' + (config.port)
-var agent = request(urlBase);
+var agent = request(server);
 var mongoose = require('mongoose');
 var credentials, user;
 
@@ -45,7 +44,6 @@ describe('Subject CRUD tests', function() {
 
 				done();
 			});
-		done();
 	});
 
 	afterEach(function(done) {

@@ -8,8 +8,6 @@ var config = require('./config/config');
 var mongoose = require('mongoose');
 var chalk = require('chalk');
 
-
-
 // Bootstrap db connection
 var db = mongoose.connect(config.db, function(err) {
 	if (err) {

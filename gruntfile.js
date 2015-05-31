@@ -1,17 +1,16 @@
 'use strict';
 
 module.exports = function(grunt) {
-	var watchFiles = {
+	var files = {
 		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js'],
-		mochaTests: ['tests/mocha/*.js'],
-		frisbyTests: ['tests/frisby/*.js'],
+		mochaTests: ['tests/mocha/*.test.js'],
 	};
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		watch: {
 			serverJS: {
-				files: watchFiles.serverJS,
+				files: files.serverJS,
 				tasks: ['jshint'],
 				options: {
 					livereload: true
@@ -20,7 +19,7 @@ module.exports = function(grunt) {
 		},
 		jshint: {
 			all: {
-				src: watchFiles.serverJS,
+				src: files.serverJS,
 				options: {
 					jshintrc: true
 				}
@@ -32,7 +31,7 @@ module.exports = function(grunt) {
 				options: {
 					nodeArgs: ['--debug'],
 					ext: 'js',
-					watch: watchFiles.serverJS
+					watch: files.serverJS
 				}
 			}
 		},
@@ -63,28 +62,55 @@ module.exports = function(grunt) {
 			},
 			secure: {
 				NODE_ENV: 'secure'
-			}
+			},
+			coverage: {
+				NODE_ENV: 'coverage',
+      }
 		},
 		mochaTest: {
-			src: watchFiles.mochaTests,
+			src: files.mochaTests,
 			options: {
-				reporter: 'spec',
-				require: 'server.js'
-			}
-		}
+				reporter: 'spec'
+			},
+		},
+    mocha_istanbul: {
+      coverage: {
+          src: 'tests/mocha',
+          options: {
+              check: {
+                  lines: 20,
+                  statements: 20
+              },
+          }
+      },
+      coveralls: {
+          src: 'tests/mocha',
+          options: {
+              coverage:true, 
+              check: {
+                  lines: 20,
+                  statements: 20
+              },
+          }
+      }
+    },
+
 	});
 
-	// Load NPM tasks
 	require('load-grunt-tasks')(grunt);
 
-	// A Task for loading the configuration object
-	grunt.task.registerTask('loadConfig', 'Task that loads the config into a grunt option.', function() {
-		require('./config/init')();
-		require('./config/config');
+	grunt.event.on('coverage', function(lcov, done){
+		require('coveralls').handleInput(lcov, function(err){
+				if (err) {
+					return done(err);
+				}
+				done();
+			});
 	});
 
 	grunt.registerTask('default', ['concurrent:default']);
-
-	grunt.registerTask('test', [ 'env:test', 'jshint', 'mochaTest']);
+	grunt.registerTask('test', ['env:test', 'jshint', 'mochaTest']);
+	grunt.registerTask('travis', ['env:test', 'jshint', 'mocha_istanbul:coveralls']);
+	grunt.registerTask('coverage', ['env:coverage', 'mocha_istanbul:coverage']);
 
 };

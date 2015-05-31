@@ -70,7 +70,7 @@ module.exports = function() {
 		fallbackLng: 'en',
 	};
 
-	if (process.env.NODE_ENV !== 'production') {
+	if (process.env.NODE_ENV === 'development') {
 		configI18n = _.extend(configI18n,{
 			saveMissing: true,
 			sendMissingTo: 'fallback',
