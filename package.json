@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "grunt",
-    "test": "grunt travis"
+    "test": "grunt travis --verbose"
   },
   "dependencies": {
     "async": "~1.0.0",
