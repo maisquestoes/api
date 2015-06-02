@@ -3,7 +3,6 @@
 /**
  * Module dependencies.
  */
-var _ = require('lodashim');
 var errorHandler = require('../errors.server.controller');
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -17,7 +16,6 @@ exports.signup = function(req, res) {
 	// For security measurement we remove the roles from the req.body object
 	delete req.body.roles;
 	
-
 	// Init Variables
 	var user = new User(req.body);
 
@@ -28,17 +26,13 @@ exports.signup = function(req, res) {
 	// Then save the user 
 	user.save(function(err) {
 		if (err) {
-			return res.status(400).json(errorHandler.getErrorMessage(err, -400));
+			return res.status(400).jsonp(errorHandler.getErrorMessage(err), -400);
 		} else {
-			// Remove sensitive data before login
-			user.password = undefined;
-			user.salt = undefined;
-
 			req.login(user, function(err) {
 				if (err) {
-					res.status(400).json(err, -400);
+					res.status(400).jsonp(err, -400);
 				} else {
-					res.json(user);
+					res.jsonp('Check your email to complete the signup.');
 				}
 			});
 		}
@@ -51,17 +45,19 @@ exports.signup = function(req, res) {
 exports.signin = function(req, res, next) {
 	passport.authenticate('local', function(err, user, info) {
 		if (err || !user) {
-			res.status(400).send(info);
+			res.status(400).jsonp(info.message, -400);
 		} else {
-			// Remove sensitive data before login
-			//user.password = undefined;
-			//user.salt = undefined;
-
 			req.login(user, function(err) {
 				if (err) {
-					res.status(400).send(err);
+					res.status(400).jsonp(err, -400);
 				} else {
-					res.json(_.clone(user));
+					var info = {
+						displayName: user.displayName,
+						apikey: user.apikey,
+						email: user.email,
+						roles: user.roles
+					};
+					res.jsonp(info);
 				}
 			});
 		}
@@ -188,15 +184,15 @@ exports.removeOAuthProvider = function(req, res) {
 
 		user.save(function(err) {
 			if (err) {
-				return res.status(400).send({
+				return res.status(400).jsonp({
 					message: errorHandler.getErrorMessage(err)
 				});
 			} else {
 				req.login(user, function(err) {
 					if (err) {
-						res.status(400).send(err);
+						res.status(400).jsonp(err);
 					} else {
-						res.json(user);
+						res.jsonp(user);
 					}
 				});
 			}

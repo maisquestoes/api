@@ -25,23 +25,10 @@ exports.userByID = function(req, res, next, id) {
 };
 
 /**
- * Require login routing middleware
- */
-exports.requiresLogin = function(req, res, next) {
-	if (!req.isAuthenticated()) {
-		return res.status(401).send({
-			message: 'User is not logged in'
-		});
-	}
-
-	next();
-};
-
-/**
  * Require apikey routing middleware
  */
 exports.requiresApikey = function(req, res, next) {
-	passport.authenticate('localapikey', { failureRedirect: '/api/unauthorized' })(req, res, next);
+	passport.authenticate('localapikey', { failureRedirect: '/user/unauthorized' })(req, res, next);
 };
 
 /**

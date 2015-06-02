@@ -23,7 +23,7 @@ module.exports = function(app) {
 	// Setting up the users authentication api
 	app.route('/auth/signup').post(users.signup);
 	app.route('/auth/signin').post(users.signin);
-	app.route('/auth/signout').get(users.signout);
+	app.route('/auth/signout').get(users.requiresApikey, users.signout);
 
 	// Setting the facebook oauth routes
 	app.route('/auth/facebook').get(passport.authenticate('facebook', {
@@ -31,7 +31,7 @@ module.exports = function(app) {
 	}));
 	app.route('/auth/facebook/callback').get(users.oauthCallback('facebook'));
 
-	app.route('/api/unauthorized').get(users.unauthorized);
+	app.route('/auth/unauthorized').get(users.unauthorized);
 
 	// Finish by binding the user middleware
 	app.param('userId', users.userByID);

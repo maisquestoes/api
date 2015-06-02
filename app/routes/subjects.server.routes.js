@@ -7,12 +7,12 @@ module.exports = function(app) {
 	// Subjects Routes
 	app.route('/subjects')
 		.get(subjects.list)
-		.post(users.requiresLogin, subjects.create);
+		.post(users.requiresApikey, subjects.create);
 
 	app.route('/subjects/:subjectId')
 		.get(subjects.read)
-		.put(users.requiresLogin, subjects.hasAuthorization, subjects.update)
-		.delete(users.requiresLogin, subjects.hasAuthorization, subjects.delete);
+		.put(users.requiresApikey, subjects.hasAuthorization, subjects.update)
+		.delete(users.requiresApikey, subjects.hasAuthorization, subjects.delete);
 
 	app.route('/api/subject')
 		.get(users.requiresApikey, subjects.listAll);

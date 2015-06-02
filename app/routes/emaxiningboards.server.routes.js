@@ -7,12 +7,12 @@ module.exports = function(app) {
 	// Emaxiningboards Routes
 	app.route('/emaxiningboards')
 		.get(emaxiningboards.list)
-		.post(users.requiresLogin, emaxiningboards.create);
+		.post(users.requiresApikey, emaxiningboards.create);
 
 	app.route('/emaxiningboards/:emaxiningboardId')
 		.get(emaxiningboards.read)
-		.put(users.requiresLogin, emaxiningboards.hasAuthorization, emaxiningboards.update)
-		.delete(users.requiresLogin, emaxiningboards.hasAuthorization, emaxiningboards.delete);
+		.put(users.requiresApikey, emaxiningboards.hasAuthorization, emaxiningboards.update)
+		.delete(users.requiresApikey, emaxiningboards.hasAuthorization, emaxiningboards.delete);
 
 	// Finish by binding the Emaxiningboard middleware
 	app.param('emaxiningboardId', emaxiningboards.emaxiningboardByID);

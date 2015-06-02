@@ -7,12 +7,12 @@ module.exports = function(app) {
 	// Roles Routes
 	app.route('/roles')
 		.get(roles.list)
-		.post(users.requiresLogin, roles.create);
+		.post(users.requiresApikey, roles.create);
 
 	app.route('/roles/:roleId')
 		.get(roles.read)
-		.put(users.requiresLogin, roles.hasAuthorization, roles.update)
-		.delete(users.requiresLogin, roles.hasAuthorization, roles.delete);
+		.put(users.requiresApikey, roles.hasAuthorization, roles.update)
+		.delete(users.requiresApikey, roles.hasAuthorization, roles.delete);
 
 	// Finish by binding the Role middleware
 	app.param('roleId', roles.roleByID);

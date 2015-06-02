@@ -2,7 +2,7 @@
 
 module.exports = function(grunt) {
 	var files = {
-		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js'],
+		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js', 'app/**/*.js'],
 		mochaTests: ['tests/mocha/*.test.js'],
 	};
 
