@@ -87,6 +87,10 @@ module.exports = function(grunt) {
           src: 'tests/mocha',
           options: {
               coverage:true,
+              check: {
+                  lines: 20,
+                  statements: 20
+              },
               root: './app',
               reportFormats: ['cobertura','lcovonly'],
           }
