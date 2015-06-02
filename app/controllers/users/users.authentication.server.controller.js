@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var UserSchema = require('../../models/user.server.model');
 var User = mongoose.model('User', UserSchema);
-
+var _ = require('lodash');
 /**
  * Signup
  */
@@ -30,7 +30,7 @@ exports.signup = function(req, res) {
 		} else {
 			req.login(user, function(err) {
 				if (err) {
-					res.status(400).jsonp(err, -400);
+					res.status(401).jsonp(err, -401);
 				} else {
 					res.jsonp('Check your email to complete the signup.');
 				}
@@ -45,11 +45,11 @@ exports.signup = function(req, res) {
 exports.signin = function(req, res, next) {
 	passport.authenticate('local', function(err, user, info) {
 		if (err || !user) {
-			res.status(400).jsonp(info.message, -400);
+			res.status(401).jsonp(info.message, -401);
 		} else {
 			req.login(user, function(err) {
 				if (err) {
-					res.status(400).jsonp(err, -400);
+					res.status(401).jsonp(err, -401);
 				} else {
 					var info = {
 						displayName: user.displayName,
@@ -68,8 +68,17 @@ exports.signin = function(req, res, next) {
  * Signout
  */
 exports.signout = function(req, res) {
-	req.logout();
-	res.redirect('/');
+	var user = req.user;
+	if (!user) {
+		res.status(403).jsonp('User is not authenticated');
+	}
+	user.apikey = _.difference(user.apikey, [req.headers.apikey]);
+	user.save(function(err) {
+		if (err) {
+			res.status(500).jsonp(-500);
+		}
+		res.jsonp('Successful signed out');
+	});
 };
 
 /**

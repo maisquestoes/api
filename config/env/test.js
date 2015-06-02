@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	db: 'mongodb://localhost/maisquestoes-test',
+	db: 'mongodb://127.0.0.1/maisquestoes-test',
 	port: 3001,
 	app: {
 		title: 'maisquestoes - Test Environment'

@@ -3,13 +3,13 @@
 /**
  * Module dependencies.
  */
-var passport = require('passport'),
-	LocalAPIKeyStrategy = require('passport-localapikey').Strategy,
-	User = require('mongoose').model('User');
+var passport = require('passport');
+var APIKeyStrategy = require('passport-apikey').Strategy;
+var User = require('mongoose').model('User');
 
 module.exports = function() {
 	// Use apikey strategy
-	passport.use(new LocalAPIKeyStrategy(
+	passport.use(new APIKeyStrategy(
 	  function(apikey, done) {
 	    User.findOne({ apikey: apikey }, function (err, user) {
 	      if (err) { return done(err); }

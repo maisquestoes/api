@@ -39,7 +39,7 @@ describe('Subject CRUD tests', function() {
 			.expect('Content-Type', /json/)
 			.expect(200)
 			.end(function(err, res) {
-				if (err) { done(err) };
+				should.not.exist(err);
 				done();
 			});
 	});
@@ -49,28 +49,28 @@ describe('Subject CRUD tests', function() {
 		agent.post('/auth/signin')
 			.send({})
 			.expect('Content-Type', /json/)
-			.expect(400, done);
+			.expect(401, done);
 	});
 
 	it('should be no able to signin with undefined username', function(done) {
 		agent.post('/auth/signin')
 			.send({username: undefined, password: 'password'})
 			.expect('Content-Type', /json/)
-			.expect(400, done);
+			.expect(401, done);
 	});
 
 	it('should be no able to signin with wrong username', function(done) {
 		agent.post('/auth/signin')
 			.send({username: 'username', password: 'password'})
 			.expect('Content-Type', /json/)
-			.expect(400, done);
+			.expect(401, done);
 	});
 
 	it('should be no able to signin with wrong password', function(done) {
 		agent.post('/auth/signin')
 			.send({username: 'username2', password: 'password'})
 			.expect('Content-Type', /json/)
-			.expect(400, done);
+			.expect(401, done);
 	});
 
 	it('should be able to signin by email and password', function(done) {
@@ -79,13 +79,43 @@ describe('Subject CRUD tests', function() {
 			.expect('Content-Type', /json/)
 			.expect(200)
 			.end(function(err, res) {
-				if (err) { done(err) };
-				res.body.o.should.have.property('displayName', 'Full2 Name2');
-				res.body.o.should.have.property('apikey');
-				res.body.o.should.have.property('email', 'test2@test.com');
-				res.body.o.should.have.property('roles', ['user']);
+				should.not.exist(err);
+		  	var res = res.body.o;
+				res.should.have.property('displayName', 'Full2 Name2');
+				res.should.have.property('apikey');
+				res.should.have.property('email', 'test2@test.com');
+				res.should.have.property('roles', ['user']);
+				user.apikey = res.apikey;
 				done();
 			});
+	});
+
+	it('should not be able to signout without apikey', function(done) {
+		agent.get('/auth/signout')
+			.send()
+			.expect('Content-Type', /json/)
+			.expect(403, done());
+	});
+
+	it('should be able to signout', function(done) {
+		agent.get('/auth/signout')
+			.send()
+      .set('apikey', user.apikey)
+			.expect('Content-Type', /json/)
+			.expect(200)
+			.end(function(err, res) {
+				should.not.exist(err);
+			  should.exist(res);
+				done();
+			});
+	});
+
+	it('should not be able to signout with same apikey', function(done) {
+		agent.get('/auth/signout')
+			.send()
+      .set('apikey', user.apikey)
+			.expect('Content-Type', /json/)
+			.expect(403, done);
 	});
 
 	afterEach(function(done) {

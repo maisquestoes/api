@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	db: 'mongodb://' + (process.env.MONGO_MAISQUESTOES || 'localhost') + '/maisquestoes-dev',
+	db: 'mongodb://127.0.0.1/maisquestoes-dev',
 	app: {
 		title: 'maisquestoes - Development Environment'
 	},

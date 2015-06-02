@@ -8,7 +8,6 @@ var mongoose = require('mongoose');
 var UserSchema = require('../../models/user.server.model');
 var User = mongoose.model('User', UserSchema);
 var passport = require('passport');
-var JsonReturn = require('../../models/jsonreturn.server.model');
 
 /**
  * User middleware
@@ -28,7 +27,16 @@ exports.userByID = function(req, res, next, id) {
  * Require apikey routing middleware
  */
 exports.requiresApikey = function(req, res, next) {
-	passport.authenticate('localapikey', { failureRedirect: '/user/unauthorized' })(req, res, next);
+	passport.authenticate('apikey', function(err, user) {
+		if (err) {
+			res.status(500).jsonp('Error trying to autenticate by apikey');
+		} else if (!user) {
+			res.status(403).jsonp('User is not authenticated');
+		} else {
+			req.user = user;
+			next();
+		}
+	})(req, res, next);
 };
 
 /**
@@ -42,21 +50,8 @@ exports.hasAuthorization = function(roles) {
 			if (_.intersection(req.user.roles, roles).length) {
 				return next();
 			} else {
-				return res.status(403).send({
-					message: 'User is not authorized'
-				});
+				return res.status(403).jsonp('User is not authorized');
 			}
 		});
 	};
-};
-
-/**
- * When doesn't have autorization
- */
-exports.unauthorized = function(req, res) {
-	var jsonReturn = new JsonReturn();
-	jsonReturn.s = -1;
-	jsonReturn.m = 'Não possui autorização para acessar este método';
-
-	res.json(jsonReturn);
 };

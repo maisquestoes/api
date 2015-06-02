@@ -70,6 +70,7 @@ module.exports = function(grunt) {
 		mochaTest: {
 			src: files.mochaTests,
 			options: {
+				require: './server',
 				reporter: 'spec'
 			},
 		},
@@ -77,6 +78,7 @@ module.exports = function(grunt) {
       coverage: {
           src: 'tests/mocha',
           options: {
+          		require: './server',
               check: {
                   lines: 20,
                   statements: 20

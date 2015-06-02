@@ -3,5 +3,12 @@
     "Estamos contratando": "Estamos contratando",
     "File Not Found": "File Not Found",
     "Cannot convert undefined or null to object": "Cannot convert undefined or null to object",
-    "Terminated": "Terminated"
+    "Terminated": "Terminated",
+    "A senha deve ser maior que 6 digitos": "A senha deve ser maior que 6 digitos",
+    "Por favor preencha o seu E-mail": "Por favor preencha o seu E-mail",
+    "Por favor preencha o seu Sobrenome": "Por favor preencha o seu Sobrenome",
+    "Por favor preencha o nome de usuário": "Por favor preencha o nome de usuário",
+    "Check your email to complete the signup": {},
+    "Não possui autorização para acessar este método": "Não possui autorização para acessar este método",
+    "Unknown authentication strategy \"localapikey\"": "Unknown authentication strategy \"localapikey\""
 }
