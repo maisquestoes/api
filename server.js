@@ -19,3 +19,5 @@ require('./config/passport')();
 app.listen(config.port);
 
 console.log(chalk.green('+Questões started on port ' + config.port));
+
+module.exports = app;
