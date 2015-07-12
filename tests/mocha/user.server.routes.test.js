@@ -39,6 +39,8 @@ describe('Subject CRUD tests', function() {
       .expect(200)
       .end(function(err, res) {
         should.not.exist(err);
+        user.verificationToken = res.body.o.verificationToken;
+        should.exist(user.verificationToken);
         done();
       });
   });
@@ -78,12 +80,11 @@ describe('Subject CRUD tests', function() {
       .expect(200)
       .end(function(err, res) {
         should.not.exist(err);
-        var res = res.body.o;
-        res.should.have.property('displayName', 'Full2 Name2');
-        res.should.have.property('apikey');
-        res.should.have.property('email', 'test2@test.com');
-        res.should.have.property('roles', ['user']);
-        user.apikey = res.apikey;
+        var response = res.body.o;
+        response.should.have.property('apikey');
+        response.should.have.property('email', 'test2@test.com');
+        response.should.have.property('roles', ['user']);
+        user.apikey = response.apikey;
         done();
       });
   });
