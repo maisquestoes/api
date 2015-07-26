@@ -46,7 +46,7 @@ describe('User routes tests', function() {
   });
 
   it('should be able to verify user by verification token', function(done) {
-    agent.post('/auth/verification')
+    agent.get('/auth/verification')
       .send({verificationToken: user.verificationToken})
       .expect('Content-Type', /json/)
       .expect(200, done);

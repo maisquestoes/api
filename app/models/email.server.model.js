@@ -21,7 +21,11 @@ module.exports = {
   },
   sendConfirmation: function(token, to) {
     var subject = 'Mais Questões - Confirmação de Cadastro';
-    var body = 'Falta pouco para concluir seu cadastro, basta acessar o <a href=' + config.url + ':'+ config.port + '/auth/verification/?verificationToken=' + token + '">link</a>';
+    var port = '';
+    if (config.port) {
+      port = ':' + config.port;
+    }
+    var body = 'Falta pouco para concluir seu cadastro, basta acessar o <a href=' + config.url + port + '/auth/verification/?verificationToken=' + token + '">link</a>';
     this.send(subject,body,to);
   }
 };

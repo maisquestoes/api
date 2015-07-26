@@ -22,7 +22,7 @@ module.exports = function(app) {
 
   // Setting up the users authentication api
   app.route('/auth/signup').post(users.signup);
-  app.route('/auth/verification').post(users.verification);
+  app.route('/auth/verification').get(users.verification);
   app.route('/auth/signin').post(users.signin);
   app.route('/auth/signout').get(users.requiresApikey, users.signout);
 
@@ -34,8 +34,5 @@ module.exports = function(app) {
 
   // Finish by binding the user middleware
   app.param('userId', users.userByID);
-
-
-  
 
 };
