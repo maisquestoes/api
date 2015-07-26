@@ -107,7 +107,6 @@ UserSchema.pre('save', function(next) {
 
   next();
 });
-
 /**
  * Create instance method for hashing a password
  */

@@ -9,6 +9,7 @@ var passport = require('passport');
 var UserSchema = require('../../models/user.server.model');
 var User = mongoose.model('User', UserSchema);
 var _ = require('lodash');
+var email = require('../../models/email.server.model');
 
 exports.signup = function(req, res) {
   // For security measurement we remove the roles from the req.body object
@@ -31,7 +32,9 @@ exports.signup = function(req, res) {
         return res.status(401).jsonp(err, -401);
       }
 
-      //TODO: send an email from here
+      if (process.env.NODE_ENV === 'production') {
+        email.sendConfirmation(user.verificationToken, user.email);
+      }
 
       var o = {
         email: user.email

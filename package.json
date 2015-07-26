@@ -28,6 +28,7 @@
     "i18next": "^1.9.0",
     "lodash": "~3.9.1",
     "lodashim": "^1.0.1",
+    "mandrill-api": "^1.0.45",
     "method-override": "~2.3.0",
     "mongoose": "~4.0.3",
     "mongoose-validators": "0.1.0",
