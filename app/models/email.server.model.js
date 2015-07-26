@@ -25,7 +25,7 @@ module.exports = {
     if (config.port) {
       port = ':' + config.port;
     }
-    var body = 'Falta pouco para concluir seu cadastro, basta acessar o <a href=' + config.url + port + '/auth/verification/?verificationToken=' + token + '">link</a>';
+    var body = 'Falta pouco para concluir seu cadastro, basta acessar o <a href="' + config.url + port + '/auth/verification/?verificationToken=' + token + '">link</a>';
     this.send(subject,body,to);
   }
 };
