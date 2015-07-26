@@ -22,10 +22,10 @@ module.exports = {
   sendConfirmation: function(token, to) {
     var subject = 'Mais Questões - Confirmação de Cadastro';
     var port = '';
-    if (config.port) {
+    if (config.port && config.port !== 80) {
       port = ':' + config.port;
     }
-    var body = 'Falta pouco para concluir seu cadastro, basta acessar o <a href="' + config.url + port + '/auth/verification/?verificationToken=' + token + '">link</a>';
+    var body = 'Falta pouco para concluir seu cadastro, basta acessar o <a href="' + config.url + port + '/auth/verification?verificationToken=' + token + '">link</a>';
     this.send(subject,body,to);
   }
 };

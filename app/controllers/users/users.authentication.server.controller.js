@@ -54,7 +54,7 @@ exports.signup = function(req, res) {
 };
 
 exports.verification = function(req, res) {
-  User.findOne({verificationToken: req.body.verificationToken}, function(err, user) {
+  User.findOne({verificationToken: req.query.verificationToken}, function(err, user) {
    if (user) {
       if (err) {
         res.status(400).jsonp(-400);
