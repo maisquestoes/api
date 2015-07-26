@@ -82,10 +82,26 @@ var UserSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  status: {
+    type: String,
+    enum: ['active', 'waitingVerification'],
+    default: 'waitingVerification'
+  },
   verificationToken: { type: String, default: ''},
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date }
 });
+
+/**
+ * Create instance method for hashing a password
+ */
+function hashPassword(salt, password) {
+  if (salt && password) {
+    return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
+  } else {
+    return password;
+  }
+}
 
 /**
  * Hook a pre save method to hash the password
@@ -95,34 +111,24 @@ UserSchema.pre('save', function(next) {
   if (!this.apikey.length) {
     this.apikey.push(_.apikey());
   }
-  
+
   if (!this.verificationToken) {
     this.verificationToken = _.apikey();
   }
 
-  if (this.password && this.password.length > 6) {
+  if (this.password && !this.salt) {
     this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
-    this.password = this.hashPassword(this.password);
+    this.password = hashPassword(this.salt, this.password);
   }
 
   next();
 });
-/**
- * Create instance method for hashing a password
- */
-UserSchema.methods.hashPassword = function(password) {
-  if (this.salt && password) {
-    return crypto.pbkdf2Sync(password, this.salt, 10000, 64).toString('base64');
-  } else {
-    return password;
-  }
-};
 
 /**
  * Create instance method for authenticating user
  */
 UserSchema.methods.authenticate = function(password) {
-  if (this.password === this.hashPassword(password)) {
+  if (this.password === hashPassword(this.salt, password)) {
     this.apikey = _.apikey();
     this.save();
     return true;

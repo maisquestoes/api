@@ -16,5 +16,7 @@
     "Missing credentials": "Missing credentials",
     "Unique field already exists": "Unique field already exists",
     "Please fill the first name": {},
-    "Please fill the last name": {}
+    "Please fill the last name": {},
+    "User successful veryfied": "User successful veryfied",
+    "You must check your email and verify your account before access your account": "You must check your email and verify your account before access your account"
 }

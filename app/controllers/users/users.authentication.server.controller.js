@@ -14,6 +14,8 @@ var email = require('../../models/email.server.model');
 exports.signup = function(req, res) {
   // For security measurement we remove the roles from the req.body object
   delete req.body.roles;
+  delete req.body.verificationToken;
+  delete req.body.apikey;
 
   // Init Variables
   var user = new User(req.body);
@@ -51,8 +53,27 @@ exports.signup = function(req, res) {
 
 };
 
+exports.verification = function(req, res) {
+  User.findOne({verificationToken: req.body.verificationToken}, function(err, user) {
+   if (user) {
+      if (err) {
+        res.status(400).jsonp(-400);
+      }
+      user.status = 'active';
+      user.save(function(err) {
+        if (err) {
+          res.status(400).jsonp(-400);
+        }
+        res.jsonp('User successful veryfied');
+      });
+    }
+  });
+};
+
 exports.signupFacebook = function(req, res) {
   delete req.body.roles;
+  delete req.body.verificationToken;
+  delete req.body.apikey;
 
   var user = User.find({facebookUid: req.body.facebookUid});
 

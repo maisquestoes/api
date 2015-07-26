@@ -4,7 +4,7 @@
 /**
  * Module dependencies.
  */
-var server = require('../../server');
+require('../../server');
 var should = require('should');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
@@ -79,7 +79,7 @@ describe('User Model Unit Tests:', function() {
     it('should generate apikey on save', function(done) {
 
       user.save(function (err) {
-
+        should.not.exist(err);
         user.apikey.map(function (apikey) {
           apikey.should.have.lengthOf(22);
           return apikey;

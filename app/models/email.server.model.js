@@ -1,4 +1,5 @@
 var mandrill = require('../../config/mandrill');
+var config = require('../../config/config');
 
 module.exports = {
   send: function(subject, body, to) {
@@ -20,7 +21,7 @@ module.exports = {
   },
   sendConfirmation: function(token, to) {
     var subject = 'Mais Questões - Confirmação de Cadastro';
-    var body = 'Falta pouco para concluir seu cadastro, basta acessar o <a href="' + token + '">link</a>';
+    var body = 'Falta pouco para concluir seu cadastro, basta acessar o <a href=' + config.url + ':'+ config.port + '/auth/verification/?verificationToken=' + token + '">link</a>';
     this.send(subject,body,to);
   }
 };
