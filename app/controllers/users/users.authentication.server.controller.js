@@ -60,6 +60,7 @@ exports.verification = function(req, res) {
         res.status(400).jsonp(-400);
       }
       user.status = 'active';
+      user.verificationToken = undefined;
       user.save(function(err) {
         if (err) {
           res.status(400).jsonp(-400);
