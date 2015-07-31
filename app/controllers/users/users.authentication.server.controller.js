@@ -101,6 +101,7 @@ exports.signin = function(req, res, next) {
         } else {
           var info = {
             firstName: user.firstName,
+            lastName: user.lastName,
             apikey: user.apikey,
             email: user.email,
             roles: user.roles
