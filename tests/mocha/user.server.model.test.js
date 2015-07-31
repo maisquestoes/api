@@ -20,36 +20,28 @@ var user, user2, user3, user4, apikeys;
 describe('User Model Unit Tests:', function() {
   before(function(done) {
     user = new User({
-      firstName: 'Full',
-      lastName: 'Name',
-      displayName: 'Full Name',
+      name: 'Full',
       email: 'test@test.com',
       username: 'username',
       password: 'password',
       provider: 'local'
     });
     user2 = new User({
-      firstName: 'Full',
-      lastName: 'Name',
-      displayName: 'Full Name',
+      name: 'Full',
       email: 'test@test.com',
       username: 'username',
       password: 'password',
       provider: 'local'
     });
     user3 = new User({
-      firstName: 'Full',
-      lastName: 'Name',
-      displayName: 'Full Name',
+      name: 'Full',
       email: 'test3@test.com',
       username: 'username3',
       password: 'password3',
       provider: 'local'
     });
     user4 = new User({
-      firstName: 'Full',
-      lastName: 'Name',
-      displayName: 'Full Name',
+      name: 'Full',
       email: 'test4@test.com',
       username: 'username4',
       password: 'password4',
@@ -122,8 +114,7 @@ describe('User Model Unit Tests:', function() {
     it('should generate new apikey on login by username', function(done) {
 
       var user = new User({
-        firstName: 'Full',
-        lastName: 'Name',
+        name: 'Full',
         email: 'test5@test.com',
         username: 'username5',
         password: 'password5',
@@ -163,7 +154,7 @@ describe('User Model Unit Tests:', function() {
     });
 
     it('should be able to show an error when try to save without first name', function(done) {
-      user.firstName = '';
+      user.name = '';
       return user.save(function(err) {
         should.exist(err);
         done();

@@ -20,8 +20,7 @@ describe('User routes tests', function() {
 
         // Create a new user
         user = {
-          firstName: 'Full2',
-          lastName: 'Name2',
+          name: 'Full2',
           email: 'test2@test.com',
           username: credentials.username,
           password: credentials.password

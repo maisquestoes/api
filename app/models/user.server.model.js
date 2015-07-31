@@ -23,17 +23,11 @@ var validateLength = function(string) {
  * User Schema
  */
 var UserSchema = new Schema({
-  firstName: {
+  name: {
     type: String,
     trim: true,
-    validate: [validateLength, 'Length of first name must be greater than 2 characters'],
+    validate: [validateLength, 'Length of name must be greater than 2 characters'],
     required: 'Please fill the first name.'
-  },
-  lastName: {
-    type: String,
-    trim: true,
-    validate: [validateLength, 'Length of last name must be greater than 2 characters'],
-    required: 'Please fill the last name.'
   },
   email: {
     type: String,
