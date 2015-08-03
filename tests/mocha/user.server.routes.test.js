@@ -89,7 +89,7 @@ describe('User routes tests', function() {
         var response = res.body.o;
         response.should.have.property('apikey');
         response.should.have.property('email', 'test2@test.com');
-        response.should.have.property('roles', ['user']);
+        response.should.have.property('roles', ['student']);
         user.apikey = response.apikey;
         done();
       });

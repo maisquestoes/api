@@ -65,9 +65,9 @@ var UserSchema = new Schema({
   roles: {
     type: [{
       type: String,
-      enum: ['user', 'admin', 'professor']
+      enum: ['student', 'admin', 'teacher', 'sponsor']
     }],
-    default: ['user']
+    default: ['student']
   },
   updated: {
     type: Date
@@ -102,8 +102,8 @@ function hashPassword(salt, password) {
  */
 UserSchema.pre('save', function(next) {
 
-  if (!this.apikey.length) {
-    this.apikey.push(_.apikey());
+  if (!this.apikey) {
+    this.apikey = [];
   }
 
   if (!this.verificationToken) {

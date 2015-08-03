@@ -10,6 +10,7 @@ var UserSchema = require('../../models/user.server.model');
 var User = mongoose.model('User', UserSchema);
 var _ = require('lodash');
 var email = require('../../models/email.server.model');
+var https = require('https');
 
 exports.signup = function(req, res) {
   // For security measurement we remove the roles from the req.body object
@@ -55,7 +56,7 @@ exports.signup = function(req, res) {
 
 exports.verification = function(req, res) {
   User.findOne({verificationToken: req.query.verificationToken}, function(err, user) {
-   if (user) {
+    if (user) {
       if (err) {
         res.status(400).jsonp(-400);
       }
@@ -71,24 +72,63 @@ exports.verification = function(req, res) {
   });
 };
 
-exports.signupFacebook = function(req, res) {
-  delete req.body.roles;
-  delete req.body.verificationToken;
-  delete req.body.apikey;
+exports.signinFacebook = function(req, res) {
 
-  var user = User.find({facebookUid: req.body.facebookUid});
+  var options = {
+    host: 'graph.facebook.com',
+    path: '/v2.4/me?fields=id,name,email&access_token=' + req.body.access_token
+  };
 
-  if (user) {
-    var info = {
-      firstName: user.firstName,
-      apikey: user.apikey,
-      email: user.email,
-      roles: user.roles
-    };
-    res.jsonp(info);
-  } 
+  var callback = function(response) {
+    var str = '';
+
+    response.on('data', function (chunk) {
+      str += chunk;
+    });
+
+    response.on('end', function () {
+      var fbUser = JSON.parse(str);
+      if (fbUser.error) {
+        res.status(400).jsonp(fbUser.error.message, 400);
+      } else {
+        User.findOne({ email: fbUser.email }, function(err, user) {
+          var apikey = _.apikey();
+          console.log(err);
+          if (!user) {
+            user = new User({
+              name: fbUser.name,
+              username: fbUser.email,
+              email: fbUser.email,
+              facebookUid: fbUser.id,
+              password: _.apikey(),
+              apikey: [apikey]
+            });
+          } else {
+            user.facebookUid = fbUser.id;
+            user.apikey.push(apikey);
+          }
+          user.save(function (err) {
+            if (err) {
+              res.status(500).jsonp(err.message);
+            } else {
+              var info = {
+                name: user.name,
+                apikey: apikey,
+                email: user.email,
+                roles: user.roles
+              };
+              res.jsonp(info);
+            }
+          });
+        });
+      }
+    });
+  };
+
+  https.request(options, callback).end();
 
 };
+
 
 exports.signin = function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
@@ -99,10 +139,19 @@ exports.signin = function(req, res, next) {
         if (err) {
           res.status(401).jsonp(err, -401);
         } else {
+          var apikey = _.apikey();
+
+          user.apikey.push(apikey);
+
+          user.save(function(err) {
+            if (err) {
+              console.log(err);
+            }
+          });
+
           var info = {
-            firstName: user.firstName,
-            lastName: user.lastName,
-            apikey: user.apikey,
+            name: user.name,
+            apikey: apikey,
             email: user.email,
             roles: user.roles
           };
@@ -174,12 +223,12 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
           User.findUniqueUsername(possibleUsername, null, function(availableUsername) {
             user = new User({
               firstName: providerUserProfile.firstName,
-                 lastName: providerUserProfile.lastName,
-                 username: availableUsername,
-                 displayName: providerUserProfile.displayName,
-                 email: providerUserProfile.email,
-                 provider: providerUserProfile.provider,
-                 providerData: providerUserProfile.providerData
+              lastName: providerUserProfile.lastName,
+              username: availableUsername,
+              displayName: providerUserProfile.displayName,
+              email: providerUserProfile.email,
+              provider: providerUserProfile.provider,
+              providerData: providerUserProfile.providerData
             });
 
             // And save the user

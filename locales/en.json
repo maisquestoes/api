@@ -1,22 +1,3 @@
 {
-    "We are hiring": "We are hiring",
-    "Estamos contratando": "Estamos contratando",
-    "File Not Found": "File Not Found",
-    "Cannot convert undefined or null to object": "Cannot convert undefined or null to object",
-    "Terminated": "Terminated",
-    "A senha deve ser maior que 6 digitos": "A senha deve ser maior que 6 digitos",
-    "Por favor preencha o seu E-mail": "Por favor preencha o seu E-mail",
-    "Por favor preencha o seu Sobrenome": "Por favor preencha o seu Sobrenome",
-    "Por favor preencha o nome de usuário": "Por favor preencha o nome de usuário",
-    "Check your email to complete the signup": {},
-    "Não possui autorização para acessar este método": "Não possui autorização para acessar este método",
-    "Unknown authentication strategy \"localapikey\"": "Unknown authentication strategy \"localapikey\"",
-    "A senha deve conter mais que 6 caracteres": {},
-    "Please fill the username": {},
-    "Missing credentials": "Missing credentials",
-    "Unique field already exists": "Unique field already exists",
-    "Please fill the first name": {},
-    "Please fill the last name": {},
-    "User successful veryfied": "User successful veryfied",
-    "You must check your email and verify your account before access your account": "You must check your email and verify your account before access your account"
+    "Facebook Uid and acess_token doesn't match": "Facebook Uid and acess_token doesn't match"
 }
