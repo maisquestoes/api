@@ -1,10 +1,5 @@
 'use strict';
 
-/**
- * Module dependencies.
- */
-var passport = require('passport');
-
 module.exports = function(app) {
   // User Routes
   var users = require('../../app/controllers/users.server.controller');
@@ -12,7 +7,6 @@ module.exports = function(app) {
   // Setting up the users profile api
   app.route('/users/me').get(users.me);
   app.route('/users').put(users.update);
-  app.route('/users/accounts').delete(users.removeOAuthProvider);
 
   // Setting up the users password api
   app.route('/users/password').post(users.changePassword);
@@ -26,12 +20,6 @@ module.exports = function(app) {
   app.route('/auth/verification').get(users.verification);
   app.route('/auth/signin').post(users.signin);
   app.route('/auth/signout').get(users.requiresApikey, users.signout);
-
-  // Setting the facebook oauth routes
-  app.route('/auth/facebook').get(passport.authenticate('facebook', {
-    scope: ['email']
-  }));
-  app.route('/auth/facebook/callback').get(users.oauthCallback('facebook'));
 
   // Finish by binding the user middleware
   app.param('userId', users.userByID);
