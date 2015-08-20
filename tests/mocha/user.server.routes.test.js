@@ -43,12 +43,30 @@ describe('User routes tests', function() {
         done();
       });
   });
+  
+  it('should be able to resend verification token to user', function(done) {
+    agent.post('/auth/resendVerification')
+      .send({ email: user.email })
+      .expect(200, done);
+  });
+
+  it('should not be able to resend verification token to user with invalid mail', function(done) {
+    agent.post('/auth/resendVerification')
+      .send({ email: user.email + 'invalid' })
+      .expect(400, done);
+  });
 
   it('should be able to verify user by verification token', function(done) {
     agent.get('/auth/verification?verificationToken='+user.verificationToken)
       .send()
       .expect('Content-Type', /json/)
       .expect(200, done);
+  });
+
+  it('should not be able to resend verification token if user is verified', function(done) {
+    agent.post('/auth/resendVerification')
+      .send({ email: user.email })
+      .expect(400, done);
   });
 
   it('should be no able to signin without credentials', function(done) {

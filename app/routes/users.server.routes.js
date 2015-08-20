@@ -17,6 +17,7 @@ module.exports = function(app) {
   // Setting up the users authentication api
   app.route('/auth/signup').post(users.signup);
   app.route('/auth/signinFacebook').post(users.signinFacebook);
+  app.route('/auth/resendVerification').post(users.resendVerification);
   app.route('/auth/verification').get(users.verification);
   app.route('/auth/signin').post(users.signin);
   app.route('/auth/signout').get(users.requiresApikey, users.signout);

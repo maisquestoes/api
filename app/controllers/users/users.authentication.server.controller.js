@@ -54,6 +54,26 @@ exports.signup = function(req, res) {
 
 };
 
+exports.resendVerification = function(req, res) {
+  User.findOne({email: req.body.email}, function(err, user) {
+    if (user) {
+      if (err) {
+        res.status(500).jsonp(err.message, -500);
+      }
+      if (user.status === 'active') {
+        res.status(400).jsonp('User already verified.');
+      } else {
+        if (process.env.NODE_ENV === 'production') {
+          email.sendConfirmation(user.verificationToken, user.email, user.name);
+        }
+        res.jsonp('Check your email to verify your MaisQuestões account');
+      }
+    } else {
+      res.status(400).jsonp('Email not found');
+    }
+  });
+};
+
 exports.verification = function(req, res) {
   User.findOne({verificationToken: req.query.verificationToken}, function(err, user) {
     if (user) {
@@ -66,7 +86,7 @@ exports.verification = function(req, res) {
         if (err) {
           res.status(400).jsonp(-400);
         }
-        res.jsonp('User successful veryfied');
+        res.jsonp('User successful verified');
       });
     }
   });

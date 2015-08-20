@@ -3,5 +3,7 @@
     "File Not Found": "File Not Found",
     "Email field must not be blank": "Email field must not be blank",
     "No account with that email has been found": {},
-    "Please check your email to recover your password": "Please check your email to recover your password"
+    "Please check your email to recover your password": "Please check your email to recover your password",
+    "Check your email to verify your MaisQuestões account": "Check your email to verify your MaisQuestões account",
+    "Email not found": "Email not found"
 }
