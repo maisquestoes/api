@@ -32,13 +32,13 @@ var UserSchema = new Schema({
   email: {
     type: String,
     trim: true,
-    unique: 'This email is already exists, please try again.',
+    unique: true,
     required: 'Please fill an email',
     match: [/.+\@.+\..+/, 'Please fill a valid email.']
   },
   username: {
     type: String,
-    unique: 'The username must be unique.',
+    unique: true,
     validate: [validateLength, 'Length of username must be greater than 2 characters'],
     required: 'Please fill the username.',
     trim: true
@@ -54,7 +54,7 @@ var UserSchema = new Schema({
   apikey: [{
     type: String,
     default: '',
-    unique: 'The apikey must be unique',
+    unique: true,
   }],
   facebookUid: {
     type: String,

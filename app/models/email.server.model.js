@@ -3,7 +3,6 @@ var config = require('../../config/config');
 
 module.exports = {
   send: function(subject, body, to) {
-    //TODO - Implements template here
     var message = body;
     mandrill.messages.send({
       'message': {
@@ -19,13 +18,55 @@ module.exports = {
       }
     });
   },
-  sendConfirmation: function(token, to) {
-    var subject = 'Mais Questões - Confirmação de Cadastro';
-    var port = '';
+  sendTemplate: function(template_name, template_content, email, name) {
+    mandrill.messages.sendTemplate({
+      "template_name": template_name, 
+      "template_content": template_content, 
+      'message': {
+        'to': [{
+          'email': email,
+          'name': name,
+          'type': 'to'
+        }]
+      }
+    }, function(result) {
+          console.log(result);
+    }, function(e) {
+      console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
+    });
+  },
+  sendConfirmation: function(token, email, name) {
     if (config.port && config.port !== 80) {
       port = ':' + config.port;
     }
-    var body = 'Falta pouco para concluir seu cadastro, basta acessar o <a href="' + config.url + port + '/auth/verification?verificationToken=' + token + '">link</a>';
-    this.send(subject,body,to);
+    var link = config.url + port + '/auth/verification?verificationToken=' + token;
+    var template_content = [
+      {
+        "name": "name",
+        "content": name
+      },
+      {
+        "name": "link",
+        "content": link
+      }
+    ];
+    this.sendTemplate('cadastro', template_content, email, name);
+  },
+  forgotPassword: function(token, email, name) {
+    if (config.port && config.port !== 80) {
+      port = ':' + config.port;
+    }
+    var link = config.url + port + '/auth/reset/' + token;
+    var template_content = [
+      {
+        "name": "name",
+        "content": name
+      },
+      {
+        "name": "link",
+        "content": link
+      }
+    ];
+    this.sendTemplate('recuperar-senha', template_content, email, name);
   }
 };

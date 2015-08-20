@@ -1,4 +1,7 @@
 {
     "Facebook Uid and acess_token doesn't match": "Facebook Uid and acess_token doesn't match",
-    "File Not Found": "File Not Found"
+    "File Not Found": "File Not Found",
+    "Email field must not be blank": "Email field must not be blank",
+    "No account with that email has been found": {},
+    "Please check your email to recover your password": "Please check your email to recover your password"
 }

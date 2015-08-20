@@ -36,7 +36,7 @@ exports.signup = function(req, res) {
       }
 
       if (process.env.NODE_ENV === 'production') {
-        email.sendConfirmation(user.verificationToken, user.email);
+        email.sendConfirmation(user.verificationToken, user.email, user.name);
       }
 
       var o = {
